@@ -5,12 +5,18 @@ Get practice writing classes and implementing functions by implementing some of 
 
 ## Goal
 My goal is to create a data structure and implement push, pop, map, filter, and a deep print in python.
+
+## Length
+Length will be called from the data-structure and will return the number of items in the data-structure.
  
 ### Push (Not Yet Supported)
 Push will be called from the data-structure and take an object as an argument.  It will add that object to the end of the list. It will return the element if successful, and null if not.
 
 ### Pop (Not Yet Supported)
 Pop will be called from the data-structure.  It will remove and return the last element of the array.
+
+### Index(Not Yet Supported)
+Index will be called from the data-structure.  It will take a single integer argument and will return the element that is in that position (0 based) or -1 if it does no recieve an integer or the integer is out of bounds.
 
 ### Map (Not Yet Supported)
 Map will be called from the data-structure and will take a function as an argument.  It will call that function on every element and will return the resulting array, deleting elements for which the function returned null or threw an error
