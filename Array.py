@@ -21,31 +21,52 @@ class Array:
 
     @staticmethod
     def _get_item_size(item):
-        return str(len(str(item)))
+        return str(len(str(item)) + len(Array._get_item_type(item)))
 
     @staticmethod
     def _get_item_type(item):
         return str(type(item))
 
     @staticmethod
-    def _get_first_item(custom_array):  # custom_array is a string that is empty or begins with <class '???...'>
-        mutated_array = custom_array[:]
-        extended_type_len = mutated_array.find('>')
-        extended_type = mutated_array[:extended_type_len]
-        item_type = extended_type[extended_type.find("'")+1:] # we need to write a find and pop function that handle these next three lines
-        item_type = item_type[:(item_type.find("'"))]
-        mutated_array = mutated_array[extended_type_len+1:]
-        item_len_len = mutated_array.find(' ')
-        item_len = int(mutated_array[:item_len_len])
-        mutated_array = mutated_array[item_len_len+1:]
-        item_value = mutated_array[:item_len]
+    def _get_item_from_value_and_type(item_value, item_type):
         if item_type == 'int':  # also pull this out
             item = int(item_value)
         elif item_type == 'str':
             item = str(item_value)
         else:
             item = -1
+        return item
+
+    @staticmethod
+    def _get_first_item(custom_array):  # custom_array is a string that is empty or begins with <class '???...'>
+        array_copy = custom_array[:]
+        item_length = Array._get_length_of_first_array_item(array_copy)
+        item_type = Array._get_type_of_first_array_item(array_copy)
+        item_value = Array._get_value_of_first_array_item(array_copy, item_length)
+        item = Array._get_item_from_value_and_type(item_value, item_type)
         print(item)
+
+    @staticmethod
+    def _get_length_of_first_array_item(array):
+        item_len_len = array.find('<')
+        item_len = int(array[:item_len_len])
+        return item_len
+
+    @staticmethod
+    def _get_type_of_first_array_item(array):
+        extended_type_beginning = array.find('<')
+        extended_type_end = array.find('>')
+        extended_type = array[extended_type_beginning:extended_type_end]
+        item_type = extended_type[extended_type.find("'") + 1:]  # we need to write a find and pop function that handle these next three lines
+        item_type = item_type[:(item_type.find("'"))]
+        return item_type
+
+    @staticmethod
+    def _get_value_of_first_array_item(array, item_length):
+        item_beginning = array.find('>')+1
+        item_end = item_length + len(str(item_length))
+        item_value = array[item_beginning:item_end]
+        return item_value
 
     def print_item(self):
         self._get_first_item(self.collection)
@@ -54,9 +75,9 @@ class Array:
         size = self._get_item_size(item)
         item_type = self._get_item_type(item)
         if self.get_length() != 0:
-            self.collection = self.collection + ', ' + item_type + size + ' ' + str(item)
+            self.collection = self.collection + ', ' + size + item_type + str(item)
         else:
-            self.collection = item_type + size + ' ' + str(item)
+            self.collection = size + item_type + str(item)
         self.length += 1
 
 
